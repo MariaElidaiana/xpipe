@@ -19,3 +19,4 @@ For detailed documentation see http://xpipe.readthedocs.io/
 
 
 Tamas Norbert Varga 2018
+Test
