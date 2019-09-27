@@ -1,0 +1,14 @@
+###################################
+#   input file aliases
+###################################
+
+local:
+  # shear catalogs in xshear style
+  shearcat:
+    default: default.dat
+
+  # redmapper catalogs
+  lenscat:
+    default:
+      lens: default.dat
+      rand: default.dat

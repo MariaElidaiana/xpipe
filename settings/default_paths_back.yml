@@ -1,0 +1,11 @@
+###################################
+#   DATA directory tree
+###################################
+
+data:
+  shearcat: /shearcat
+  lenscat: /lenscat
+  xin: /xshear_in
+  xout: /xshear_out
+  results: /results
+  calibs: /calibs
