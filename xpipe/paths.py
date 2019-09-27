@@ -204,7 +204,8 @@ def get_bin_settings(params, devmode):
         nrandoms = params['nrandoms']['full']
 
     if param_bins != "auto":
-        keys = np.sort(param_bins.keys())
+        #keys = np.sort(param_bins.keys())
+        keys = sorted(param_bins.keys()) #Heidi
         param_bins = [param_bins[key] for key in keys]
 
     return param_bins, nrandoms

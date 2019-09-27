@@ -37,7 +37,7 @@ custom_output_path: False #/global/cscratch1/sd/haoyiwu/xpipe_output/iotest/
 # for the measurement. E.g. you can define two binning
 # schemes: one really complex for full, and a simple
 # which is expected to run much faster for dev
-mode: full
+mode: dev
 
 # prefix for all files (with NO trailing "_")
 tag: test #desy1run
