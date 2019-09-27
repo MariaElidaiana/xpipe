@@ -84,6 +84,16 @@ def get_dirpaths(params, project_path):
     if not custom_data_path:
         custom_data_path = project_path + 'data'
     _dirpaths = expand_paths(_dirs['data'], custom_data_path)
+
+
+    ## Heidi
+    custom_output_path = params['custom_output_path']
+    if not custom_output_path:
+        custom_output_path = custom_data_path
+    else:
+        print('custom output path', custom_output_path)
+    _dirpaths.update(expand_paths(_dirs['output'], custom_output_path))
+
     return _dirpaths
 
 
@@ -231,12 +241,13 @@ if project_path is not None:
 
     # READING custom params files
     has_custom_specified = "custom_params_file" in params.keys()
-    while has_custom_specified and params["custom_params_file"] is not None:
+    #while has_custom_specified and params["custom_params_file"] is not None:#Heidi
+    if has_custom_specified and params["custom_params_file"] is not None:
         custom_param_path = _complete_params_path(params["custom_params_file"])
-        if os.path.isfile(custom_param_path):
-            _update_params(custom_param_path)
-        else:
-            break
+        #if os.path.isfile(custom_param_path): # Heidi: uncomment, infinite loop
+        _update_params(custom_param_path)
+        #else:
+        #    break
 
 
     # TODO add effective re-initialization of params for API mode
@@ -244,4 +255,5 @@ if project_path is not None:
 
     def set_params(**kwargs):
         global devmode, dirpaths, fullpaths, fullurls, pdf_files
+
 

@@ -25,8 +25,10 @@ custom_params_file: iotest_params.yml
 custom_data_path: /global/cscratch1/sd/tvarga/Y1_DATA/xpipe_data/
 pdf_paths: /global/cscratch1/sd/tvarga/Y1_DATA/DES_PDF/*.h5
 
-# Heidi
-custom_output_path: False #/global/cscratch1/sd/haoyiwu/xpipe_output/iotest/
+## added by Heidi 
+# if False: uses default 
+custom_output_path: /global/cscratch1/sd/haoyiwu/xpipe_output/iotest/
+
 
 
 
@@ -37,10 +39,10 @@ custom_output_path: False #/global/cscratch1/sd/haoyiwu/xpipe_output/iotest/
 # for the measurement. E.g. you can define two binning
 # schemes: one really complex for full, and a simple
 # which is expected to run much faster for dev
-mode: full
+mode: dev
 
 # prefix for all files (with NO trailing "_")
-tag: test #desy1run
+tag: iotest #desy1run
 
 # reduced, lensfit, metacal
 shear_style: metacal

@@ -356,7 +356,7 @@ def load_randcat(params=None, fullpaths=None, which=None):
         select = np.ones(len(ra), dtype=bool)
 
     # number of parameter columns
-    nq = len(randkey.keys()) - 3
+    nq = len(randkey.keys()) - 4 # Heidi
     if "jkey" in randkey.keys():
         nq -= 1
     qlist = np.zeros(shape=(len(ra), nq))
@@ -736,15 +736,18 @@ class XIO(object):
         """creates project directory"""
         self.dpath = self.dirpaths['xin'] + "/" + self.params["tag"]
         if not os.path.isdir(self.dpath):
-            os.mkdir(self.dpath)
+            #os.mkdir(self.dpath)
+            os.makedirs(self.dpath)  # Heidi
 
         self.opath = self.dirpaths['xout'] + "/" + self.params["tag"]
         if not os.path.isdir(self.opath):
-            os.mkdir(self.opath)
+            #os.mkdir(self.opath)
+            os.makedirs(self.opath)  # Heidi
 
         self.respath = self.dirpaths['results'] + "/" + self.params["tag"]
         if not os.path.isdir(self.respath):
-            os.mkdir(self.respath)
+            #os.mkdir(self.respath)
+            os.makedirs(self.respath)  # Heidi
 
     def _save_jk_cens(self):
         fname = self.dpath + '/' + self.params["tag"] + "_jkcens" + self.bin_tag + '.dat'
@@ -756,7 +759,7 @@ class XIO(object):
         makecat(self.dpath + "/" + self.flist[self.ind],
                         self.lenses['id'][sind], self.lenses['ra'][sind],
                         self.lenses['dec'][sind], self.lenses['z'][sind])
-        print('saved ' + self.flist[self.ind])
+        print('saved ' + self.dpath + "/" +self.flist[self.ind])# Heidi
 
         fio.write(self.dpath + "/" + self.flist[self.ind].replace('.dat', '.fits'), self.lenses["fullcat"][sind], clobber=True)
 
@@ -837,7 +840,7 @@ class XIO(object):
         makecat(self.dpath + "/" + self.rlist[self.ind],
                         self.randoms['id'][rind][self.idraw], self.randoms['ra'][rind][self.idraw],
                         self.randoms['dec'][rind][self.idraw], self.randoms['z'][rind][self.idraw])
-        print('saved ' + self.rlist[self.ind])
+        print('saved ' + self.dpath + "/" +self.rlist[self.ind]) #Heidi
 
     def save_rands_jk(self):
         """writes random points to file for each JK patch in xshear style"""
