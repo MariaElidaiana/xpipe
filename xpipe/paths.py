@@ -242,14 +242,12 @@ if project_path is not None:
 
     # READING custom params files
     has_custom_specified = "custom_params_file" in params.keys()
-    #while has_custom_specified and params["custom_params_file"] is not None:#Heidi
-    if has_custom_specified and params["custom_params_file"] is not None:
+    while has_custom_specified and params["custom_params_file"] is not None:
         custom_param_path = _complete_params_path(params["custom_params_file"])
-        #if os.path.isfile(custom_param_path): # Heidi: uncomment, infinite loop
-        _update_params(custom_param_path)
-        #else:
-        #    break
-
+        if os.path.isfile(custom_param_path):
+            _update_params(custom_param_path)
+        else:
+            break
 
     # TODO add effective re-initialization of params for API mode
 

@@ -1,3 +1,8 @@
+# Heidi: this is the minimal default_params.yml file
+# please don't commit this file to github; instead put your settings in params.yml
+# examples for params.yml can be found in settings_examples
+
+
 ######################################################
 #  Default Parameter bins for Y1 analysis
 #
@@ -19,7 +24,7 @@
 
 # If you want to use an other parameter file, then
 # specify it here. It must be in the same directory
-custom_params_file: iotest_params.yml
+custom_params_file: params.yml
 
 # if False: uses default project_path + /data
 custom_data_path: /global/cscratch1/sd/tvarga/Y1_DATA/xpipe_data/
@@ -80,27 +85,27 @@ seeds:
 # Here define parameters for XSHEAR config
 
 # cosmology parameters:
-cosmo_params:
-  H0: 70.
-  Om0: 0.3
+# cosmo_params:
+#   H0: 70.
+#   Om0: 0.3
 
-# logarithmic (base 10) radial bins from rmin to rmax
-# units: Mpc, comoving_mpc or arcmin
-radial_bins:
-  nbin: 15
-  rmin: 0.0323
-  rmax: 30.0
-  units: Mpc
+# # logarithmic (base 10) radial bins from rmin to rmax
+# # units: Mpc, comoving_mpc or arcmin
+# radial_bins:
+#   nbin: 15
+#   rmin: 0.0323
+#   rmax: 30.0
+#   units: Mpc
 
-# source weight style
-# "optimal" for DeltaSigma, or "uniform" for shear
-weight_style: "optimal"
+# # source weight style
+# # "optimal" for DeltaSigma, or "uniform" for shear
+# weight_style: "optimal"
 
-# source-lens pair logging
-pairlog:
- pairlog_rmin: 0 #r bin numbers between which pairs are printed to file; 
- pairlog_rmax: 15 #
- pairlog_nmax: 0 # maximum number of pairs printed in each radial bin; <=0 for no maximum
+# # source-lens pair logging
+# pairlog:
+#  pairlog_rmin: 0 #r bin numbers between which pairs are printed to file; 
+#  pairlog_rmax: 15 #
+#  pairlog_nmax: 0 # maximum number of pairs printed in each radial bin; <=0 for no maximum
 
 
 
@@ -165,28 +170,28 @@ fields:
     ra_right: 250.
 
 ######################################################
-# boost factor p(z) params
+# # boost factor p(z) params
 
-pzpars:
-  hist:
-    nbin: 15
-    zmin: 0.0
-    zmax: 3.0
-    tag: "zhist"
-  full:
-    tag: "zpdf"
-  boost:
-    refprof: 14
-    rbmin: 0.15 #3 # Heidi: not used?
-    rbmax: 0.25 #13# Heidi: not used?
+# pzpars:
+#   hist:
+#     nbin: 15
+#     zmin: 0.0
+#     zmax: 3.0
+#     tag: "zhist"
+#   full:
+#     tag: "zpdf"
+#   boost:
+#     refprof: 14
+#     rbmin: 0.15 #3 # Heidi: not used?
+#     rbmax: 0.25 #13# Heidi: not used?
 
-#### below added by Heidi
-source_bins_to_use: [0] # Tamas says it has no effect
+# #### below added by Heidi
+# source_bins_to_use: [0] # Tamas says it has no effect
 
 
-### below: used by shape noise
-shear_nrot: 1 # TODO: probably need bigger
+# ### below: used by shape noise
+# shear_nrot: 1 # TODO: probably need bigger
 
-shear_seed_master: 0 
+# shear_seed_master: 0 
 
 
