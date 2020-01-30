@@ -24,7 +24,7 @@
 
 # If you want to use an other parameter file, then
 # specify it here. It must be in the same directory
-custom_params_file: params.yml
+custom_params_file: params_y1zs3.yml
 
 # if False: uses default project_path + /data
 custom_data_path: /global/cscratch1/sd/tvarga/Y1_DATA/xpipe_data/
@@ -42,10 +42,10 @@ custom_output_path: False #/global/cscratch1/sd/haoyiwu/xpipe_output/iotest/
 # for the measurement. E.g. you can define two binning
 # schemes: one really complex for full, and a simple
 # which is expected to run much faster for dev
-mode: dev
+mode: full
 
 # prefix for all files (with NO trailing "_")
-tag: test #desy1run
+tag: wlgammatdesy1zs3
 
 # reduced, lensfit, metacal
 shear_style: metacal
@@ -57,11 +57,11 @@ cat_to_use: default_cat  # corresponds to lenscat in default_inputs.yml
 
 # parameter bins
 param_bins_full:
-  q0_edges: [0.2, 0.35, 0.5, 0.65]
-  q1_edges: [5., 10., 14., 20., 30., 45., 60., 999]
+  q0_edges: [0.15, 0.3, 0.45, 0.6, 0.75] #, 0.9] #[0.2, 0.35, 0.5, 0.65]
+  q1_edges: [20., 30., 45., 60., 999] #[5., 10., 14., 20., 30., 45., 60., 999]
 
 param_bins_dev:
-  q0_edges: [0.2, 0.35]
+  q0_edges: [0.15, 0.3] #[0.2, 0.35]
   q1_edges: [45, 60]
 
 # number of processes (cores) to use in calculations
@@ -69,7 +69,7 @@ nprocess: 2
 
 # maximum number of Jackknife regions to use in resampling
 # actual number is max(n_lens, njk_max)
-njk_max: 2 #100
+njk_max: 8 #100
 
 # number of random points to use
 nrandoms:
@@ -83,6 +83,7 @@ seeds:
 
 ######################################################
 # Here define parameters for XSHEAR config
+# Maria: Use the values below in your params.yml to run gammat
 
 # cosmology parameters:
 # cosmo_params:
@@ -92,19 +93,19 @@ seeds:
 # # logarithmic (base 10) radial bins from rmin to rmax
 # # units: Mpc, comoving_mpc or arcmin
 # radial_bins:
-#   nbin: 15
-#   rmin: 0.0323
-#   rmax: 30.0
-#   units: Mpc
+#   nbin: 20
+#   rmin: 2.5
+#   rmax: 250.
+#   units: arcmin
 
 # # source weight style
 # # "optimal" for DeltaSigma, or "uniform" for shear
-# weight_style: "optimal"
+# weight_style: "uniform"
 
 # # source-lens pair logging
 # pairlog:
 #  pairlog_rmin: 0 #r bin numbers between which pairs are printed to file; 
-#  pairlog_rmax: 15 #
+#  pairlog_rmax: 20 #
 #  pairlog_nmax: 0 # maximum number of pairs printed in each radial bin; <=0 for no maximum
 
 
@@ -194,4 +195,11 @@ fields:
 
 # shear_seed_master: 0 
 
+# tomobin attempt - Maria
+#zbins_src: [0.2, 0.43]  #this was for gammatdesy1
+#zbins_src: [0.2, 1.3]   #this was for gammatdesy1b
 
+#zbins_src: [0.2, 0.43]    #this is for wl and gammatdesy1zs0    
+#zbins_src: [0.43, 0.63]   #this is for wl and gammatdesy1zs1
+#zbins_src: [0.63, 0.9]    #this is for wl and gammatdesy1zs2
+zbins_src: [0.9, 1.3]     #this is for wl and gammatdesy1zs3

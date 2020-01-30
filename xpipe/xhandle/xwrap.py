@@ -551,7 +551,7 @@ def extract_pairs_bins(infiles, jk=True):
 
 def create_infodict(flist, head=False, pairs=False, seed=None,
                     rotate=False, seed_tag="", shape_path=None, metatag=None,
-                    xconfig=None, params=None, dirpaths=None, fullpaths=None, src_bins=(0,)):
+                    xconfig=None, params=None, dirpaths=None, fullpaths=None, src_bins=(0,), zbins_src=None): #src_bins=(0,)): #Maria
     """
     Creates configuration dictionary which can be passed to multiprocessing map_async()
 
@@ -616,6 +616,8 @@ def create_infodict(flist, head=False, pairs=False, seed=None,
     if xconfig is None:
         xconfig = dirpaths["xin"] + "/" + params["tag"] + "/" + params["tag"] + "_xconfig.dat"
 
+    if zbins_src is None: #Maria 
+        zbins_src = params['zbins_src'] #Maria
 
     infodicts = []
     for file in flist:
@@ -639,6 +641,7 @@ def create_infodict(flist, head=False, pairs=False, seed=None,
                 'rotate_shears': rotate,
                 'shape_path': _spath,
                 'xconfig': xconfig,
+                'zbins_src': zbins_src, #Maria
             }
 
             infodicts.append(infodict_raw)
@@ -661,13 +664,16 @@ def call_xshear(infodict):
     outfile = infodict['outfile']
     pairsfile = infodict['pairsfile']
     logfile = infodict['logfile']
+    zbins_src = infodict['zbins_src'] #Maria
 
     shape_path = infodict['shape_path']
-
+    
     if 'head' in infodict.keys() and infodict['head']:
         cmd1 = 'head -n ' + str(infodict['head']) + " " + shape_path
     else:
         cmd1 = 'cat ' + shape_path
+    
+    src_filter = " | awk '($6 >= "+str(zbins_src[0])+") && ($6 < "+str(zbins_src[1])+")' " #Maria
 
     if 'xconfig' in infodict.keys() and infodict['xconfig'] is not None:
         xconfig = infodict['xconfig']
@@ -677,14 +683,17 @@ def call_xshear(infodict):
 
     cmd2 = paths.fullpaths['xpath'] + ' ' + xconfig + ' ' +\
            infile + ' ' + pairsfile
-
+    
     print('processing ' + os.path.split(infile)[1] + ' with ' + os.path.split(shape_path)[1])
-
+ 
     try:
         rfile = open(outfile, 'w+')
         lfile = open(logfile, 'w+')
-
-        p1 = sp.Popen(cmd1.split(' '), stdout=sp.PIPE)
+        cmd1_wfilter = cmd1 + src_filter
+        #cmd1_wfilter[1]= shape_path+src_filter 
+        print('----\n', cmd1_wfilter)
+        #p1 = sp.Popen(cmd1.split(' '), stdout=sp.PIPE)
+        p1 = sp.Popen(cmd1_wfilter, stdout=sp.PIPE, shell=True) #Maria
         p2 = sp.Popen(cmd2.split(' '), stdin=p1.stdout, stdout=rfile, stderr=lfile)
 
         p1.stdout.close()
@@ -746,7 +755,8 @@ def write_profile(prof, path):
     """saves DeltaSigma and covariance in text format"""
 
     # Saving profile
-    profheader = "R [Mpc]\tDeltaSigma_t [M_sun / pc^2]\tDeltaSigma_t_err [M_sun / pc^2]\tDeltaSigma_x [M_sun / pc^2]\tDeltaSigma_x_err [M_sun / pc^2]"
+    #profheader = "R [Mpc]\tDeltaSigma_t [M_sun / pc^2]\tDeltaSigma_t_err [M_sun / pc^2]\tDeltaSigma_x [M_sun / pc^2]\tDeltaSigma_x_err [M_sun / pc^2]"
+    profheader = "theta [arcmin]\tgamma_t \tgamma_t_err \tgamma_x \tgamma_x_err"
     res = np.vstack((prof.rr, prof.dst, prof.dst_err, prof.dsx, prof.dsx_err)).T
     fname = path + "_profile.dat"
     print("saving:", fname)
