@@ -746,7 +746,7 @@ def write_profile(prof, path):
     """saves DeltaSigma and covariance in text format"""
 
     # Saving profile
-    profheader = "R [Mpc]\tDeltaSigma_t [M_sun / pc^2]\tDeltaSigma_t_err [M_sun / pc^2]\tDeltaSigma_x [M_sun / pc^2]\tDeltaSigma_x_err [M_sun / pc^2]"
+    profheader = "theta [arcmin]\tgamma_t \tgamma_t_err \tgamma_x \tgamma_x_err"
     res = np.vstack((prof.rr, prof.dst, prof.dst_err, prof.dsx, prof.dsx_err)).T
     fname = path + "_profile.dat"
     print("saving:", fname)

@@ -83,6 +83,7 @@ seeds:
 
 ######################################################
 # Here define parameters for XSHEAR config
+# Maria: Use the values below in your params.yml to run gammat  
 
 # cosmology parameters:
 # cosmo_params:
@@ -92,19 +93,19 @@ seeds:
 # # logarithmic (base 10) radial bins from rmin to rmax
 # # units: Mpc, comoving_mpc or arcmin
 # radial_bins:
-#   nbin: 15
-#   rmin: 0.0323
-#   rmax: 30.0
-#   units: Mpc
+#   nbin: 20
+#   rmin: 2.5
+#   rmax: 250.
+#   units: arcmin
 
 # # source weight style
 # # "optimal" for DeltaSigma, or "uniform" for shear
-# weight_style: "optimal"
+# weight_style: "uniform"
 
 # # source-lens pair logging
 # pairlog:
 #  pairlog_rmin: 0 #r bin numbers between which pairs are printed to file; 
-#  pairlog_rmax: 15 #
+#  pairlog_rmax: 20 #
 #  pairlog_nmax: 0 # maximum number of pairs printed in each radial bin; <=0 for no maximum
 
 

@@ -158,13 +158,13 @@ class StackedProfileContainer(object):
         # indices to be used in the shear stacking
         self.dst_nom = 4
         self.dsx_nom = 5
-        self.dst_denom = 6
-        self.dsx_denom = 7
+        self.dst_denom = 8
+        self.dsx_denom = 9
 
         self.e1_nom = 10
         self.e2_nom = 11
         self.meta_denom = 3
-        self.meta_prefac = 2
+        self.meta_prefac = 3
 
         self.snum_ind = 2
 
