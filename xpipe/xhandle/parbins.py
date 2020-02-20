@@ -9,7 +9,7 @@ import os
 import fitsio as fio
 import kmeans_radec as krd
 import numpy as np
-
+import h5py as h5
 
 from .ioshear import makecat
 from .. import paths
@@ -235,16 +235,30 @@ def load_lenscat(params=None, fullpaths=None, which=None):
     if isinstance(lenspath, np.ndarray):
         lenscat = fio.read(lenspath[which])
     else:
-        lenscat = fio.read(lenspath)
+        try:
+            lenscat = fio.read(lenspath)     #Try to read fits
+        except OSError:
+            lenscat = h5.File(lenspath, 'r') #If error, try to read h5
+            
+    print('Lenscat: ', lenspath)
     lenskey = params['lenskey']
+    lensh5  = params['lensh5'] #can be 'lgt5' ot 'lgt20'
 
-    ids = lenscat[lenskey['id']]
-    ra = lenscat[lenskey['ra']]
+    lenscat = lenscat['/catalog/redmapper/'+lensh5['cat']] #accessing the h5 redmapper catalog
+
+    try: #read fits
+        ids = lenscat[lenskey['id']]
+        ra  = lenscat[lenskey['ra']]
+        dec = lenscat[lenskey['dec']]
+        z   = lenscat[lenskey["z"]]
+    except KeyError: #read h5
+        ids = np.array(lenscat[lenskey['id'].lower()])
+        ra  = np.array(lenscat[lenskey['ra'].lower()])
+        dec = np.array(lenscat[lenskey['dec'].lower()])
+        z   = np.array(lenscat[lenskey["z"].lower()])
+
     mira = ra < 0.
     ra[mira] = ra[mira] + 360.
-
-    dec = lenscat[lenskey['dec']]
-    z = lenscat[lenskey["z"]]
 
     if params["fields_to_use"] is not None:
         select = np.zeros(len(ra), dtype=bool)
@@ -253,16 +267,20 @@ def load_lenscat(params=None, fullpaths=None, which=None):
             select += field_cut(ra, dec, fields[name])
     else:
         select = np.ones(len(ra), dtype=bool)
-
+    
     # number of parameter columns
     nq = len(lenskey.keys()) - 4
     if "jkey" in lenskey.keys():
         nq -= 1
     qlist = np.zeros(shape=(len(ra), nq))
+    
     for ival in np.arange(nq):
-        colname = "q" + str(ival)
-        qlist[:, ival] = lenscat[lenskey[colname]]
-
+        colname = "q" + str(ival)         
+        try:                 #read fits cols
+            qlist[:, ival] = lenscat[lenskey[colname]]
+        except KeyError:     #read h5 cols
+            qlist[:, ival] = lenscat[lenskey[colname].lower()]
+    
     data = {
         "id" : ids[select],
         "ra" : ra[select],
@@ -270,8 +288,21 @@ def load_lenscat(params=None, fullpaths=None, which=None):
         "z": z[select],
         "qlist" : qlist[select]
     }
+    
+    try: #for fits
+        lenscat_select = lenscat[select]
+    except AttributeError: #h5 does not accept numpy-like mask         
+        h5_keys = list(lenscat.keys())
+        lscat_sel, keys_sel = [], []
+        for h5_key in h5_keys: 
+            if isinstance(lenscat[h5_key], h5.Dataset):
+                tmp = np.array(lenscat[h5_key])[select]
+            if tmp.ndim==1: #ndarray does not work with fitsio    
+                lscat_sel.append(tmp)
+                keys_sel.append(h5_key) 
+        lenscat_select = np.rec.fromarrays(lscat_sel, names=keys_sel)
 
-    return data, lenscat[select]
+    return data, lenscat_select
 
 
 def load_randcat(params=None, fullpaths=None, which=None):
@@ -331,22 +362,38 @@ def load_randcat(params=None, fullpaths=None, which=None):
     if isinstance(randpath, np.ndarray):
         randcat = fio.read(randpath[which])
     else:
-        randcat = fio.read(randpath)
+        try:
+            randcat = fio.read(randpath) #read fits
+        except OSError:
+            randcat = h5.File(randpath, 'r') #If error, try to read h5
 
+    print('Randcat: ', randpath)
     randkey = params['randkey']
+    lensh5  = params['lensh5'] #can be 'lgt5' ot 'lgt20'
 
-    ra = randcat[randkey['ra']]
+    randcat = randcat['/randoms/redmapper/'+lensh5['cat']] #accessing the h5 redmapper catalog
+    try:
+        ra = randcat[randkey['ra']] #fits
+        dec = randcat[randkey['dec']]
+        z = randcat[randkey["z"]]
+    except KeyError:
+        ra = np.array(randcat[randkey['ra'].lower()]) #h5
+        dec = np.array(randcat[randkey['dec'].lower()])
+        z = np.array(randcat[randkey["z"].lower()])
+
     if 'w' in randkey.keys():
-        w = randcat[randkey['w']]
+        try:
+            w = randcat[randkey['w']] #fits
+        except KeyError:
+            w = np.array(randcat[randkey['w'].lower()]) #h5
     else:
         w = np.ones(ra.shape)
+
     mira = ra < 0.
     ra[mira] = ra[mira] + 360.
-
-    dec = randcat[randkey['dec']]
-    z = randcat[randkey["z"]]
-    ids = np.arange(len(randcat))
-
+    
+    ids = np.arange(len(ra)) #(randcat))
+    
     if params["fields_to_use"] is not None:
         select = np.zeros(len(ra), dtype=bool)
         fields = get_fields_auto()
@@ -360,9 +407,13 @@ def load_randcat(params=None, fullpaths=None, which=None):
     if "jkey" in randkey.keys():
         nq -= 1
     qlist = np.zeros(shape=(len(ra), nq))
+
     for ival in np.arange(nq):
         colname = "q" + str(ival)
-        qlist[:, ival] = randcat[randkey[colname]]
+        try: #fits
+            qlist[:, ival] = randcat[randkey[colname]]
+        except KeyError: #h5
+            qlist[:, ival] = randcat[randkey[colname].lower()]
 
     data = {
         "id" : ids[select],
@@ -373,7 +424,20 @@ def load_randcat(params=None, fullpaths=None, which=None):
         "qlist" : qlist[select]
     }
 
-    return data, randcat[select]
+    try: #for fits
+        randcat_select = randcat[select]
+    except AttributeError: #h5 does not accept numpy-like mask         
+        h5_rkeys = list(randcat.keys())
+        rcat_sel, rkeys_sel = [], []
+        for h5_rkey in h5_rkeys:
+            if isinstance(randcat[h5_rkey], h5.Dataset):
+                rtmp = np.array(randcat[h5_rkey])[select]
+            if rtmp.ndim==1: #ndarray does not work with fitsio    
+                rcat_sel.append(rtmp)
+                rkeys_sel.append(h5_rkey)
+        randcat_select = np.rec.fromarrays(rcat_sel, names=rkeys_sel)
+
+    return data, randcat_select
 
 
 def prepare_lenses(bin_settings=None, params=None, fullpaths=None):
