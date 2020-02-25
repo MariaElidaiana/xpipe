@@ -26,3 +26,9 @@ Forked by Heidi Wu and Maria Elidaiana in Sep 2019
 
 29/01/2020 - Added the branches tomobin, gammat and desy3
 
+30/01/2020 - Added modification for run in gammat mode
+
+19/02/2020 - Added changes to the branch desy3
+
+25/02/2020 - Added the mustar branch for Y1 data
+
