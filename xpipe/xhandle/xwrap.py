@@ -67,7 +67,7 @@ def get_shear(params=None):
 
     shear = OrderedDict([
         ('shear_style', params['shear_style']),
-        ('sigmacrit_style', 'sample'),
+        ('sigmacrit_style', params['sigmacrit_style']),
         ('shear_units', 'both'),
         ('sourceid_style',  'index'),
         ('weight_style', params['weight_style']),
@@ -148,11 +148,13 @@ tail_uniform = OrderedDict([
 
 def get_default_xshear_settings(params=None):
     """The baseline settings for a Metacal lensing measurement"""
+    if params is None:
+        params = paths.params
     default_xshear_settings = {
         'head': get_head(params=params),
         'shear': OrderedDict([
-            ('shear_style', 'metacal'),
-            ('sigmacrit_style', 'sample'),
+            ('shear_style', params['shear_style']),
+            ('sigmacrit_style', params['sigmacrit_style']),
             ('shear_units', 'both'),
             ('sourceid_style', 'index'),
         ]),
@@ -229,8 +231,8 @@ def get_main_source_settings(params=None):
         params = paths.params
     main_source_settings = {
         "shear": OrderedDict([
-            ('shear_style', "metacal"),
-            ('sigmacrit_style', 'sample'),
+            ('shear_style', params['shear_style']),
+            ('sigmacrit_style', params['sigmacrit_style']),
             ('shear_units', 'both'),
             ('sourceid_style', 'index'),
         ]),
@@ -243,8 +245,8 @@ def get_main_source_settings_nopairs():
     """Load settings for unsheared METACAL run *with out* pairlogging"""
     main_source_settings_nopairs = {
         "shear": OrderedDict([
-            ('shear_style', "metacal"),
-            ('sigmacrit_style', 'sample'),
+            ('shear_style', params['shear_style']),
+            ('sigmacrit_style', params['sigmacrit_style']),
             ('shear_units', 'both'),
             ('sourceid_style', 'index'),
         ]),

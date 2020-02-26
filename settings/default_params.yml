@@ -27,8 +27,8 @@
 custom_params_file: params.yml
 
 # if False: uses default project_path + /data
-custom_data_path: /global/cscratch1/sd/tvarga/Y1_DATA/xpipe_data/
-pdf_paths: /global/cscratch1/sd/tvarga/Y1_DATA/DES_PDF/*.h5
+custom_data_path: /global/cscratch1/sd/mariaeli/Y3_DATA
+pdf_paths: /global/cscratch1/sd/tvarga/Y1_DATA/DES_PDF/*.h5 #NO Y3 version yet
 
 # Heidi
 custom_output_path: False #/global/cscratch1/sd/haoyiwu/xpipe_output/iotest/
@@ -45,7 +45,7 @@ custom_output_path: False #/global/cscratch1/sd/haoyiwu/xpipe_output/iotest/
 mode: dev
 
 # prefix for all files (with NO trailing "_")
-tag: test #desy1run
+tag: test
 
 # reduced, lensfit, metacal
 shear_style: metacal
@@ -65,11 +65,11 @@ param_bins_dev:
   q1_edges: [45, 60]
 
 # number of processes (cores) to use in calculations
-nprocess: 2
+nprocess: 8
 
 # maximum number of Jackknife regions to use in resampling
 # actual number is max(n_lens, njk_max)
-njk_max: 10 #100
+njk_max: 2
 
 # number of random points to use
 nrandoms:
@@ -100,6 +100,10 @@ seeds:
 # # source weight style
 # # "optimal" for DeltaSigma, or "uniform" for shear
 # weight_style: "optimal"
+
+# # sigmacrit style
+# # "sample" for metacal, or "point" for "reduced" and "lensfit"   
+# sigmacrit_style: "sample"  
 
 # # source-lens pair logging
 # pairlog:

@@ -239,12 +239,11 @@ def load_lenscat(params=None, fullpaths=None, which=None):
             lenscat = fio.read(lenspath)     #Try to read fits
         except OSError:
             lenscat = h5.File(lenspath, 'r') #If error, try to read h5
+            lensh5  = params['lensh5']                             #can be 'lgt5' ot 'lgt20'
+            lenscat = lenscat['/catalog/redmapper/'+lensh5['cat']] #accessing the h5 redmapper catalog
             
     print('Lenscat: ', lenspath)
     lenskey = params['lenskey']
-    lensh5  = params['lensh5'] #can be 'lgt5' ot 'lgt20'
-
-    lenscat = lenscat['/catalog/redmapper/'+lensh5['cat']] #accessing the h5 redmapper catalog
 
     try: #read fits
         ids = lenscat[lenskey['id']]
@@ -301,7 +300,7 @@ def load_lenscat(params=None, fullpaths=None, which=None):
                 lscat_sel.append(tmp)
                 keys_sel.append(h5_key) 
         lenscat_select = np.rec.fromarrays(lscat_sel, names=keys_sel)
-
+    
     return data, lenscat_select
 
 
@@ -366,12 +365,12 @@ def load_randcat(params=None, fullpaths=None, which=None):
             randcat = fio.read(randpath) #read fits
         except OSError:
             randcat = h5.File(randpath, 'r') #If error, try to read h5
+            lensh5  = params['lensh5']                             #can be 'lgt5' ot 'lgt20'
+            randcat = randcat['/randoms/redmapper/'+lensh5['cat']] #accessing the h5 redmapper catalog
 
     print('Randcat: ', randpath)
     randkey = params['randkey']
-    lensh5  = params['lensh5'] #can be 'lgt5' ot 'lgt20'
 
-    randcat = randcat['/randoms/redmapper/'+lensh5['cat']] #accessing the h5 redmapper catalog
     try:
         ra = randcat[randkey['ra']] #fits
         dec = randcat[randkey['dec']]

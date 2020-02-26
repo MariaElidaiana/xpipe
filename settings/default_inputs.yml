@@ -7,15 +7,15 @@ local:
   shearcat: 
     default_shear: #shear_to_use
       Y3_mastercat_5_24_19_subsampled_metacal_no-e2.dat
-      #Y3_mastercat_5_24_19_subsampled_metacal.dat
-      #shuf_y1a1-unblind-v2-mcal_zmean-meta_zmc-mof.dat
+      #metacal_y3buzz_reduced_matched_se.dat
+      ##Y3_mastercat_5_24_19_subsampled_metacal.dat
 
   # redmapper catalogs
   lenscat:
     default_cat:
       lens:
-        Y3_mastercat_5_24_19_subsampled.h5      
-        #y1a1_gold_1.0.3-d10-mof-001d_run_redmapper_v6.4.17-vlim_lgt5_desformat_catalog.fit
+        Y3_mastercat_5_24_19_subsampled.h5
+        #redmapper_y3buzz.fits       
       rand:
-        Y3_mastercat_5_24_19_subsampled.h5      
-        #y1a1_gold_1.0.3_wide+d10-mof-001d_run_redmapper_v6.4.17-2_randcat_z0.10-0.95_lgt005_vl02.fit
+        Y3_mastercat_5_24_19_subsampled.h5
+        #None      

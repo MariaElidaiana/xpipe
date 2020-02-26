@@ -2,7 +2,7 @@
 #   DATA directory tree
 ###################################
 data:
-  shearcat: /  #/shearcat
+  shearcat: /shearcat
   lenscat: /lenscat
 
 
