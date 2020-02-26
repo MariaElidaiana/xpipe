@@ -101,6 +101,10 @@ seeds:
 # # "optimal" for DeltaSigma, or "uniform" for shear
 # weight_style: "optimal"
 
+# # sigmacrit style
+# # "sample" for metacal, or "point" for "reduced" and "lensfit"   
+# sigmacrit_style: "sample"
+
 # # source-lens pair logging
 # pairlog:
 #  pairlog_rmin: 0 #r bin numbers between which pairs are printed to file; 

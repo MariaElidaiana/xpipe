@@ -133,7 +133,7 @@ def get_fullpaths(params, project_path, default_inputs=True):
         pass
 
     fullpaths = get_local_filenames(_inputs_dict['local'], dirpaths)
-
+     
     # check if shear_to_use is present in fullpaths
     if params['shear_to_use'] not in fullpaths.keys():
         raise KeyError(
