@@ -27,11 +27,11 @@
 custom_params_file: params.yml
 
 # if False: uses default project_path + /data
-custom_data_path: /global/cscratch1/sd/tvarga/Y1_DATA/xpipe_data/
-pdf_paths: /global/cscratch1/sd/tvarga/Y1_DATA/DES_PDF/*.h5
+custom_data_path: /share/storage1/des/Y1A1/wl_catalogs/
+pdf_paths: /share/storage1/des/Y1A1/wl_catalogs/DES_PDF/*.h5 #not set yet
 
 # Heidi
-custom_output_path: False #/global/cscratch1/sd/haoyiwu/xpipe_output/iotest/
+custom_output_path: /share/storage1/des/Y1A1/xpipe/ #False
 
 
 
@@ -58,7 +58,7 @@ cat_to_use: default_cat  # corresponds to lenscat in default_inputs.yml
 # parameter bins
 param_bins_full:
   q0_edges: [0.2, 0.35, 0.5, 0.65]
-  q1_edges: [5., 10., 14., 20., 30., 45., 60., 999]
+  q1_edges: [20., 30., 45., 60., 999]
 
 param_bins_dev:
   q0_edges: [0.2, 0.35]
@@ -102,12 +102,12 @@ seeds:
 # weight_style: "optimal"
 
 # # sigmacrit style
-# # "sample" for metacal, or "point" for "reduced" and "lensfit"   
+# # "sample" for metacal, or "point" for "reduced" and "lensfit"
 # sigmacrit_style: "sample"
 
 # # source-lens pair logging
 # pairlog:
-#  pairlog_rmin: 0 #r bin numbers between which pairs are printed to file; 
+#  pairlog_rmin: 0 #r bin numbers between which pairs are printed to file;
 #  pairlog_rmax: 15 #
 #  pairlog_nmax: 0 # maximum number of pairs printed in each radial bin; <=0 for no maximum
 
@@ -117,19 +117,19 @@ seeds:
 # aliases for catolog parameters
 
 lenskey:
-  id: MEM_MATCH_ID
+  id: ID #MEM_MATCH_ID
   ra: RA
   dec: DEC
   z: Z_LAMBDA
   q0: Z_LAMBDA
-  q1: LAMBDA_CHISQ
+  q1: LAMBDA #LAMBDA_CHISQ
 
 randkey:
-  q0: ZTRUE
-  q1: AVG_LAMBDAOUT
+  q0: Z #ZTRUE
+  q1: LAMBDA #AVG_LAMBDAOUT
   ra: RA
   dec: DEC
-  z: ZTRUE
+  z: Z #ZTRUE
   w: WEIGHT
 
 ######################################################
@@ -137,7 +137,7 @@ randkey:
 
 lens_prefix: y1clust
 rand_prefix: y1rand
-subtr_prefix: y1subtr ## Heidi: required if using randoms for postprocess.py 
+subtr_prefix: y1subtr ## Heidi: required if using randoms for postprocess.py
 
 suffixes:
   "profile": "_profile.dat"
@@ -196,6 +196,4 @@ fields:
 # ### below: used by shape noise
 # shear_nrot: 1 # TODO: probably need bigger
 
-# shear_seed_master: 0 
-
-
+# shear_seed_master: 0
